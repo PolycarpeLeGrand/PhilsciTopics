@@ -1,5 +1,5 @@
 :root {
-    --c-primary: #af1818; /*#d9230f #af1818*/
+    --c-primary: #318e7d; /*#d9230f #af1818*/
     --c-primary-dark: #770c00;
     --c-primary-light: #ffcccc;
     --c-darkred-t: #770c0099;
@@ -44,6 +44,11 @@ body {
 
 .content-text {
     font-size: 1rem;
+    text-align: justify;
+}
+
+.content-text-small {
+    font-size: 0.9rem;
 }
 
 .content-card, .content-jumbotron  {
@@ -96,3 +101,10 @@ body {
     margin-bottom: 1rem;
 }
 
+.inline-input .custom-control-inline {
+    margin-right: 1.5rem;
+}
+
+.title-row {
+    padding: 0 0 2rem 0;
+}

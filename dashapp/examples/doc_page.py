@@ -20,7 +20,6 @@ doc_title_jumbo = dbc.Jumbotron([
     dbc.Row([
         dbc.Col([
             html.P('Project description', className='content-text'),
-            dcc.Markdown(MD.test_md)
         ], lg=4),
         dbc.Col([
             html.P('Author info etc.', className='content-text')

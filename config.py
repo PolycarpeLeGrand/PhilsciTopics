@@ -3,11 +3,11 @@ from dotenv import load_dotenv
 from os import environ
 
 # Browser tab title
-PROJECT_TITLE = 'Phidash'
+PROJECT_TITLE = 'PhilsciTopics'
 
 # Title and subtitle to display on navbar
-NAV_TITLE = 'PhiDash'
-NAV_SUBTITLE = 'A multipage Dash project template'
+NAV_TITLE = 'PhilsciTopics'
+NAV_SUBTITLE = 'A digital history of philosophy of science'
 
 
 # Load project settings
@@ -27,14 +27,41 @@ BASE_STORAGE_PATH = PROJECT_PATH / 'data'
 GENERATE_DF_DOC_FILE = True
 DATAFRAMES_DICT = {
     'TEST_DF': (BASE_STORAGE_PATH / 'dataframes/test_data_df.p', 'A simple test dataframe'),
-    'TEST_DF_2': BASE_STORAGE_PATH / 'dataframes/test_data_df.p'
+    'TEST_DF_2': BASE_STORAGE_PATH / 'dataframes/test_data_df.p',
+    'DOCTOPICS_DF': BASE_STORAGE_PATH / 'dataframes/doctopics_df.p',
+    'METADATA_DF': BASE_STORAGE_PATH / 'dataframes/metadata_df.p',
+    'TOPIC_MAPPINGS_DF': BASE_STORAGE_PATH / 'dataframes/topic_mappings_df.p',
+    'TOPICWORDS_DF': BASE_STORAGE_PATH / 'dataframes/topicwords_df.p',
 }
 
 
 # Same idea, but for markdown documents. Only paths as values, no tuples with doc.
 # Temporary feature until i come up with something better
 MARKDOWNS_DICT = {
-    'test_md': BASE_STORAGE_PATH / 'markdowns/test_md.md'
+    'test_md': BASE_STORAGE_PATH / 'markdowns/test_md.md',
+    'METADATA': BASE_STORAGE_PATH / 'markdowns/metadata.md',
+    'HOWTO': BASE_STORAGE_PATH / 'markdowns/howto.md',
+    'PRESENTATION': BASE_STORAGE_PATH / 'markdowns/presentation.md',
+    'REFERENCES': BASE_STORAGE_PATH / 'markdowns/references.md',
+    'TOPICDETAILS': BASE_STORAGE_PATH / 'markdowns/topicdetails.md',
+    'TOPICVIZ': BASE_STORAGE_PATH / 'markdowns/topicviz.md',
+    'META_SUNBURST': BASE_STORAGE_PATH / 'markdowns/meta_sunburst.md',
+}
+
+
+JOURNAL_COLORS = {
+    'BJPS': '#66C5CC',
+    'EJPS': '#F6CF71',
+    'ERK': '#F89C74',
+    'ISPS': '#DCB0F2',
+    'JGPS': '#87C55F',
+    'PS': '#9EB9F3',
+    'SHPSA': '#FE88B1',
+    'SYN': '#C9DB74',
+    'en': '#F89C74',
+    'de': '#F6CF71',
+    'fr': '#66C5CC',
+    'nl': '#DCB0F2',
 }
 
 #MD_DIRECTORIES = [

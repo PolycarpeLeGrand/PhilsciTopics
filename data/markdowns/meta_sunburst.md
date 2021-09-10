@@ -1,0 +1,2 @@
+The sunburst diagram allows for a more in-depth look of the journal and language distributions within different time periods. A range of time periods can be selected with the slider below and both the diagram and the statistics will be updated accordingly.
+Click on the middle section to zoom in on a specific journal.

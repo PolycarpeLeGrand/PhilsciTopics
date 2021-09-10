@@ -6,6 +6,10 @@ from dashapp.examples.centered_jumbo import centered_jumbo_layout
 from dashapp.examples.doc_page import doc_page_layout
 from dashapp.examples.df_doc_page import df_doc_page_layout
 
+from dashapp.home import home_layout
+from dashapp.content_pages.corpus import corpus_layout
+from dashapp.content_pages.topic_viz import topic_viz_layout
+
 from config import NAV_TITLE, NAV_SUBTITLE
 
 # Register pages using the following format:
@@ -15,10 +19,12 @@ from config import NAV_TITLE, NAV_SUBTITLE
 # if use_nav is set to False, no link will be created in the nav bar but the page is still accessible via url or links
 # The page should be held in a dbc.Container component, defined in a distinct file and imported here
 PAGES = [
-    {'name': 'page-0', 'url': '/', 'label': 'Home', 'container': centered_jumbo_layout, 'in_nav': True},
-    {'name': 'page-1', 'url': '/ex', 'label': 'Example Page', 'container': template_page_layout, 'in_nav': True},
-    {'name': 'page-2', 'url': '/doc', 'label': 'Project Doc', 'container': doc_page_layout, 'in_nav': True},
-    {'name': 'page-3', 'url': '/dfs', 'label': 'Dataframe Doc', 'container': df_doc_page_layout, 'in_nav': False},
+    {'name': 'page-0', 'url': '/', 'label': 'Home', 'container': home_layout, 'in_nav': True},
+    {'name': 'page-1', 'url': '/corpus', 'label': 'Corpus', 'container': corpus_layout, 'in_nav': True},
+    {'name': 'page-2', 'url': '/topviz', 'label': 'Topic Visualizations', 'container': topic_viz_layout, 'in_nav': True},
+    {'name': 'page-3', 'url': '/topdetails', 'label': 'Topic Details', 'container': 'x', 'in_nav': True},
+    {'name': 'page-4', 'url': '/diachronic', 'label': 'Diachronic Overview', 'container': 'x', 'in_nav': True},
+    {'name': 'page-99', 'url': '/doc', 'label': 'Project Doc', 'container': doc_page_layout, 'in_nav': True},
 ]
 
 
