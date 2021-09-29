@@ -10,7 +10,10 @@ page_name = 'home_page'
 pres_card = dbc.Card([
     dbc.CardBody([
         dbc.Row([
-            dbc.Col(html.H2('Eight journals over eight decades: a computational topic-modeling approach to contemporary philosophy of science')),
+            dbc.Col(
+                html.H2('Eight journals over eight decades: a computational topic-modeling approach to contemporary philosophy of science'),
+                style={'padding': '0 3rem'}
+            ),
         ], className='title-row'),
 
         dbc.Row([

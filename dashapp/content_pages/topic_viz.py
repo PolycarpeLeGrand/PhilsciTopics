@@ -15,19 +15,20 @@ page_name = 'topic_viz'
 # Enlever les etiquettes des axes
 
 text_controls_div = html.Div([
-    dbc.Row([
-        dbc.Col(
-            dcc.Markdown(MD.TOPICVIZ, className='content-text')
-        )
-    ], style={'margin-bottom': '2rem'}),
+
+    #dbc.Row([
+    #    dbc.Col(
+    #        dcc.Markdown(MD.TOPICVIZ, className='content-text')
+    #    )
+    #], style={'margin-bottom': '2rem'}),
 
     dbc.Row([
         dbc.Col([
             dbc.Label('Representation type', className='content-text-small font-weight-bold'),
             dbc.RadioItems(
                 options=[
-                    {'label': '3 Dimensions', 'value': 3},
-                    {'label': '2 Dimensions', 'value': 2},
+                    {'label': '3 Dimensions T-SNE', 'value': 3},
+                    {'label': '2 Dimensions T-SNE', 'value': 2},
                 ],
                 value=3,
                 id='topic-viz-page-dimensions-checklist',
@@ -152,12 +153,18 @@ topic_main_card = dbc.Card([
 
     dbc.Row([
         dbc.Col([
+            dcc.Markdown(MD.TOPICVIZ, className='content-text')
+        ], lg=6, style={'margin-bottom': '2rem'}),
+    ]),
+
+    dbc.Row([
+        dbc.Col([
             text_controls_div,
             html.Hr(style={'margin': '2rem'}),
             article_details_div
-        ], lg=4),
+        ], lg=4, className='mt-5'),
         dbc.Col([
-            dcc.Graph(id='topic-viz-page-scatter', style={'height': '90vh', 'max-height': '100vw'}),
+            dbc.Spinner(dcc.Graph(id='topic-viz-page-scatter', style={'height': '90vh', 'max-height': '100vw'})),
         ])
     ]),
 
@@ -303,6 +310,7 @@ def update_topicsvix_article_details(click_data):
     '''
     top_topics = DM.DOCTOPICS_DF.loc[article_id].sort_values(ascending=False).to_frame(name='values')
     top_topics['topics'] = top_topics.index.map(DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'].to_dict())
+    print(top_topics)
     fig = px.pie(top_topics,
                  values='values',
                  names='topics',
@@ -313,7 +321,7 @@ def update_topicsvix_article_details(click_data):
                  )
 
     fig.update_traces(textposition='inside', textinfo='percent+label')
-    fig.update_layout(legend_title='Topics', legend_itemsizing='constant', paper_bgcolor='#fcfcfc', showlegend=False)
+    fig.update_layout(paper_bgcolor='#fcfcfc', showlegend=False)
 
     return head, title, journal, period, lang, tokens, fig, citation
 

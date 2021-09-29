@@ -174,7 +174,8 @@ def update_sunburst(val):
     fig.update_layout(title='Journal and Language Distributions',
                       paper_bgcolor='#fcfcfc')
 
-    lang_md = '  \n'.join(f'{i}: {v}' for i, v in lang_counts.iteritems())
+    total_articles = df["counts"].sum()
+    lang_md = '  \n'.join(f'{i}: {v} ({(v/total_articles)*100:.2f}%)' for i, v in lang_counts.iteritems())
 
-    return f'Selected Period: {beg[:4]}-{end[-4:]}', f'Total Articles: {df["counts"].sum()}', fig, lang_md
+    return f'Selected Period: {beg[:4]}-{end[-4:]}', f'Total Articles: {total_articles}', fig, lang_md
 

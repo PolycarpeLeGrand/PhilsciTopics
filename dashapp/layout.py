@@ -9,6 +9,8 @@ from dashapp.examples.df_doc_page import df_doc_page_layout
 from dashapp.home import home_layout
 from dashapp.content_pages.corpus import corpus_layout
 from dashapp.content_pages.topic_viz import topic_viz_layout
+from dashapp.content_pages.topic_details import topic_details_layout
+from dashapp.content_pages.diachronic import diachronic_layout
 
 from config import NAV_TITLE, NAV_SUBTITLE
 
@@ -22,8 +24,8 @@ PAGES = [
     {'name': 'page-0', 'url': '/', 'label': 'Home', 'container': home_layout, 'in_nav': True},
     {'name': 'page-1', 'url': '/corpus', 'label': 'Corpus', 'container': corpus_layout, 'in_nav': True},
     {'name': 'page-2', 'url': '/topviz', 'label': 'Topic Visualizations', 'container': topic_viz_layout, 'in_nav': True},
-    {'name': 'page-3', 'url': '/topdetails', 'label': 'Topic Details', 'container': 'x', 'in_nav': True},
-    {'name': 'page-4', 'url': '/diachronic', 'label': 'Diachronic Overview', 'container': 'x', 'in_nav': True},
+    {'name': 'page-3', 'url': '/topdetails', 'label': 'Topic Details', 'container': topic_details_layout, 'in_nav': True},
+    {'name': 'page-4', 'url': '/diachronic', 'label': 'Diachronic Overview', 'container': diachronic_layout, 'in_nav': True},
     {'name': 'page-99', 'url': '/doc', 'label': 'Project Doc', 'container': doc_page_layout, 'in_nav': True},
 ]
 

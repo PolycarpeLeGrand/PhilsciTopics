@@ -108,3 +108,13 @@ body {
 .title-row {
     padding: 0 0 2rem 0;
 }
+
+
+.radio-buttons div input {
+    display: none !important;
+
+}
+
+.radio-button::before, .radio-button::after {
+    display: none;
+}
