@@ -78,7 +78,7 @@ corpus_page_main_card = dbc.Card([
                 # corpus_lang_select,
             ], lg=4),
             dbc.Col([
-                dcc.Graph(id='corpus-page-bar'),
+                dbc.Spinner(dcc.Graph(id='corpus-page-bar')),
                 corpus_lang_select,
             ], style={'padding-left': '2rem'}, lg=8),
         ]),
@@ -99,7 +99,7 @@ corpus_page_main_card = dbc.Card([
 
         dbc.Row([
             dbc.Col([
-                dcc.Graph('corpus-page-sun-graph', style={'height': '50vh', 'max-height': '90vw', 'width': '50vh', 'max-width': '90vw'}),
+                dbc.Spinner(dcc.Graph('corpus-page-sun-graph', style={'height': '50vh', 'max-height': '90vw', 'width': '50vh', 'max-width': '90vw'})),
             ], width='auto', style={'padding-left': '2rem'}),
             dbc.Col([
                 corpus_sun_inputs,

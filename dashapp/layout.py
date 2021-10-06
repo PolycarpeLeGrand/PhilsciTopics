@@ -23,8 +23,8 @@ from config import NAV_TITLE, NAV_SUBTITLE
 PAGES = [
     {'name': 'page-0', 'url': '/', 'label': 'Home', 'container': home_layout, 'in_nav': True},
     {'name': 'page-1', 'url': '/corpus', 'label': 'Corpus', 'container': corpus_layout, 'in_nav': True},
-    {'name': 'page-2', 'url': '/topviz', 'label': 'Topic Visualizations', 'container': topic_viz_layout, 'in_nav': True},
-    {'name': 'page-3', 'url': '/topdetails', 'label': 'Topic Details', 'container': topic_details_layout, 'in_nav': True},
+    {'name': 'page-2', 'url': '/topicviz', 'label': 'Topic Visualizations', 'container': topic_viz_layout, 'in_nav': True},
+    {'name': 'page-3', 'url': '/topicdetails', 'label': 'Topic Details', 'container': topic_details_layout, 'in_nav': True},
     {'name': 'page-4', 'url': '/diachronic', 'label': 'Diachronic Overview', 'container': diachronic_layout, 'in_nav': True},
     {'name': 'page-99', 'url': '/doc', 'label': 'Project Doc', 'container': doc_page_layout, 'in_nav': True},
 ]

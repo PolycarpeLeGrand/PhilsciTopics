@@ -310,7 +310,6 @@ def update_topicsvix_article_details(click_data):
     '''
     top_topics = DM.DOCTOPICS_DF.loc[article_id].sort_values(ascending=False).to_frame(name='values')
     top_topics['topics'] = top_topics.index.map(DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'].to_dict())
-    print(top_topics)
     fig = px.pie(top_topics,
                  values='values',
                  names='topics',

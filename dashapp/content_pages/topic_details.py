@@ -10,9 +10,9 @@ from dashapp import cache, DM, MD
 page_name = 'topic_details'
 
 wordcloud_div = html.Div([
-    html.Img(src='assets/wordclouds/wc_topic_0.png',
+    dbc.Spinner(html.Img(src='assets/wordclouds/wc_topic_0.png',
              style={'width': '100%', 'border': 'solid', 'border-width': '1px'},
-             id='topics-details-page-wordcloud'),
+             id='topics-details-page-wordcloud')),
 ])
 
 word_vert_radios = html.Div([
@@ -36,7 +36,7 @@ word_vert_radios = html.Div([
 top_words_table_div = html.Div([
     dash_table.DataTable(
         columns=[
-            {'name': '', 'id': 'num_col'},
+            {'name': 'Rank', 'id': 'num_col'},
             {'name': 'Word', 'id': 'word_col'},
             {'name': 'Weight', 'id': 'weight_col'},
         ],
@@ -44,7 +44,11 @@ top_words_table_div = html.Div([
         cell_selectable=False,
         row_selectable='single',
         style_cell={'height': '2rem', 'padding': '0 0.5rem'},
-        style_header={'border': 'none', 'background': '#318e7d', 'text-align': 'center'},
+        style_cell_conditional=[
+            {'if': {'column_id': 'num_col'}, 'textAlign': 'center'},
+            {'if': {'column_id': 'weight'}, 'textAlign': 'center'},
+        ],
+        style_header={'border-top': 'none', 'background': '#318e7d', 'text-align': 'center'},
         css=[{'selector': '.dash-table-container', 'rule': 'font-family: inherit'}, ]
     )
 ])
@@ -60,10 +64,11 @@ word_details_div = html.Div([
                 html.Div('Weight distribution across topics',
                          style={'height': '2rem', 'background': '#318e7d',
                                 'display': 'flex', 'justify-content': 'center',
-                                'align-items': 'center', 'border-bottom': '1px solid rgb(211, 211, 211)'}),
-                dcc.Graph(id='topic-details-page-word-pie',
+                                'align-items': 'center', 'border-bottom': '1px solid rgb(211, 211, 211)',
+                                'border-left': '1px solid rgb(211, 211, 211)'}),
+                dbc.Spinner(dcc.Graph(id='topic-details-page-word-pie',
                           style={'width': '24rem', 'height': '24rem', 'border': '1px solid rgb(211, 211, 211)',
-                                 'border-top': 'none'})
+                                 'border-top': 'none'}))
             ])
         ], width='auto', style={'padding': '0'}),
     ],
@@ -123,7 +128,7 @@ citations_control_div = html.Div([
 citations_table_div = html.Div([
     dash_table.DataTable(
         columns=[
-            {'name': '', 'id': 'rank'},
+            {'name': 'Rank', 'id': 'rank'},
             {'name': 'Weight', 'id': 'weight'},
             {'name': '', 'id': 'art_id'},
             {'name': 'Citation', 'id': 'citation'},
@@ -132,7 +137,7 @@ citations_table_div = html.Div([
         cell_selectable=False,
         row_selectable='single',
         style_cell={'height': '2.5rem', 'padding': '0 0.5rem'},
-        style_header={'border': 'none', 'background': '#318e7d', 'text-align': 'center'},
+        style_header={'border-top': 'none', 'background': '#318e7d', 'text-align': 'center'},
         style_data={
             'whiteSpace': 'normal',
         },
@@ -141,6 +146,8 @@ citations_table_div = html.Div([
             ],
         style_cell_conditional=[
             {'if': {'column_id': 'citation'}, 'textAlign': 'left', 'maxWidth': '800px'},
+            {'if': {'column_id': 'rank'}, 'textAlign': 'center'},
+            {'if': {'column_id': 'weight'}, 'textAlign': 'center'},
             {'if': {'column_id': 'art_id'}, 'display': 'none'},
         ],
     )
@@ -157,9 +164,10 @@ citations_details_div = html.Div([
                 html.Div('Article topic distribution',
                          style={'height': '2.5rem', 'background': '#318e7d',
                                 'display': 'flex', 'justify-content': 'center',
-                                'align-items': 'center'}),
-                dcc.Graph(id='topic-details-page-citations-pie',
-                          style={'width': '25rem', 'height': '25rem'})
+                                'align-items': 'center', 'border-left': '1px solid rgb(211, 211, 211)'}),
+                dbc.Spinner(dcc.Graph(id='topic-details-page-citations-pie',
+                          style={'width': '25rem', 'height': '25rem', 'border': '1px solid rgb(211, 211, 211)',
+                                 'border-top': 'none', 'margin-top': '1px'}))
             ])
         ], width='auto', style={'padding': '0', 'background': 'rgb(241, 241, 241)'}),
     ],
@@ -359,9 +367,7 @@ def make_citation_topics_fig(article=None):
     #df['topics'] = df.index.map(DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'].to_dict())
 
     df = DM.DOCTOPICS_DF.loc[article].to_frame(name='values')
-    print(df)
     df['topics'] = df.index.map(DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'].to_dict())
-    print(df)
 
     fig = px.pie(df, values='values', names='topics', color='topics',
                  color_discrete_map=DM.TOPIC_MAPPINGS_DF.set_index('cluster_letter_+_topic_(id)')[
