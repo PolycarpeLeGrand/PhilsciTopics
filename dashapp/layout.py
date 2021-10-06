@@ -12,7 +12,7 @@ from dashapp.content_pages.topic_viz import topic_viz_layout
 from dashapp.content_pages.topic_details import topic_details_layout
 from dashapp.content_pages.diachronic import diachronic_layout
 
-from config import NAV_TITLE, NAV_SUBTITLE
+from config import NAV_TITLE, NAV_SUBTITLE, IS_PROD
 
 # Register pages using the following format:
 # {'name': 'page-X', 'url': '/PAGE_URL', 'label': 'NAVBAR_LABEL', 'container': IMPORTED_CONTAINER, 'in_nav': True/False}
@@ -26,9 +26,10 @@ PAGES = [
     {'name': 'page-2', 'url': '/topicviz', 'label': 'Topic Visualizations', 'container': topic_viz_layout, 'in_nav': True},
     {'name': 'page-3', 'url': '/topicdetails', 'label': 'Topic Details', 'container': topic_details_layout, 'in_nav': True},
     {'name': 'page-4', 'url': '/diachronic', 'label': 'Diachronic Overview', 'container': diachronic_layout, 'in_nav': True},
-    {'name': 'page-99', 'url': '/doc', 'label': 'Project Doc', 'container': doc_page_layout, 'in_nav': True},
 ]
 
+if not IS_PROD:
+    PAGES.append({'name': 'page-99', 'url': '/doc', 'label': 'Project Doc', 'container': doc_page_layout, 'in_nav': True})
 
 # Collapsable navbar component
 # A link will be created for each page specified above
