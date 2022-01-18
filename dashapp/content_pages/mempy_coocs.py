@@ -4,9 +4,9 @@ from config import BASE_STORAGE_PATH
 import pickle
 
 page_name = 'mempy-coocs'
-COOC_SAMPLES = pickle.load(open(BASE_STORAGE_PATH / 'cooc_6_refs_sample_dict.p', 'rb'))
+COOC_SAMPLES = pickle.load(open(BASE_STORAGE_PATH / 'cooc_9_refs_sample_dict.p', 'rb'))
 
-WORDS_0 = sorted(['mechanism', 'understand', 'explain', 'model', 'theory', 'predict'])
+WORDS_0 = sorted(['mechanism', 'understand', 'explain', 'model', 'theory', 'predict', 'understanding', 'explanation', 'prediction'])
 WORDS_1 = sorted(list(set(w for ws in COOC_SAMPLES.keys() for w in ws)))
 # WORDS_0 = sorted(list(set(w[0] for w in COOC_SAMPLES.keys())))
 # WORDS_1 = sorted(list(set(w[1] for w in COOC_SAMPLES.keys())))
@@ -35,7 +35,7 @@ def cooc_entry(i, d):
         ], style={'margin-bottom': '1rem'}),
         dbc.Row([
             dbc.Col([
-                html.Span(f'Texte du paragraphe (paragraphe {d["para_num"]})', style={'font-weight': '700'}),
+                html.Span(f'Texte du paragraphe (paragraphe {d["para_num"]}/{d["tot_paras"]})', style={'font-weight': '700'}),
                 html.Div(d['para_text'], style={'padding-top': '1rem'})
             ]),
             dbc.Col([
