@@ -10,5 +10,5 @@ The corpus consists of the full-text content of 8 major philosophy of science jo
 * *Synthese* (SYN). 
 
 Overall, the corpus comprises 16917 articles, including 1016 in languages other than English (i.e. about 6%). 
-The histogram on the right (or below on smaller screens) shows the number of documents per time period for each journal. Journals can be removed/added by clicking or double clicking their name in the legend, and languages can be filtered using the checkboxes.
+The histogram shows the number of documents per time period for each journal. Journals can be removed/added by clicking or double clicking their name in the legend, and languages can be filtered using the checkboxes.
 

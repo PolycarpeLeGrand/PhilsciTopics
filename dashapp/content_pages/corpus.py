@@ -69,7 +69,7 @@ corpus_sun_inputs = html.Div([
 corpus_page_main_card = dbc.Card([
     dbc.CardBody([
         dbc.Row([
-            dbc.Col(html.H2('Exploring the Corpus: Eight Journals Over Eight Decades')),
+            dbc.Col(html.H2('Exploring the Corpus')),
         ], className='title-row'),
 
         dbc.Row([
@@ -139,7 +139,7 @@ def update_journals_bar(checked_values):
 
     fig.update_layout(legend_title='Journals', xaxis_title='Time periods',
                       yaxis_title='Number of articles', title='Number of Articles by Time Periods',
-                      paper_bgcolor='#fcfcfc')# plot_bgcolor=GRAPH_COLORS['background'], paper_bgcolor=GRAPH_COLORS['background'], font_color=GRAPH_COLORS['text'])
+                      )# paper_bgcolor='#fcfcfc')# plot_bgcolor=GRAPH_COLORS['background'], paper_bgcolor=GRAPH_COLORS['background'], font_color=GRAPH_COLORS['text'])
 
     show_labels = False
     if show_labels:
@@ -170,9 +170,8 @@ def update_sunburst(val):
     lang_counts = df['lang'].value_counts()
     df = df.groupby(['journal_id', 'lang']).size().reset_index(name='counts')
 
-    fig = px.sunburst(df, path=['journal_id', 'lang'], values='counts')
-    fig.update_layout(title='Journal and Language Distributions',
-                      paper_bgcolor='#fcfcfc')
+    fig = px.sunburst(df, path=['journal_id', 'lang'], values='counts', color='journal_id',
+                      color_discrete_map=JOURNAL_COLORS, title='Journal and Language Distributions')
 
     total_articles = df["counts"].sum()
     lang_md = '  \n'.join(f'{i}: {v} ({(v/total_articles)*100:.2f}%)' for i, v in lang_counts.iteritems())

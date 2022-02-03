@@ -23,12 +23,12 @@ from config import NAV_TITLE, NAV_SUBTITLE, IS_PROD
 # The page should be held in a dbc.Container component, defined in a distinct file and imported here
 PAGES = [
     {'name': 'page-0', 'url': '/', 'label': 'Home', 'container': home_layout, 'in_nav': True},
-    {'name': 'page-1', 'url': '/corpus', 'label': 'Corpus', 'container': corpus_layout, 'in_nav': True},
+    {'name': 'page-1', 'url': '/corpus', 'label': 'Exploring the Corpus', 'container': corpus_layout, 'in_nav': True},
     {'name': 'page-2', 'url': '/topicviz', 'label': 'Topic Visualizations', 'container': topic_viz_layout, 'in_nav': True},
     {'name': 'page-3', 'url': '/topicdetails', 'label': 'Topic Details', 'container': topic_details_layout, 'in_nav': True},
     {'name': 'page-4', 'url': '/diachronic', 'label': 'Diachronic Overview', 'container': diachronic_layout, 'in_nav': True},
     {'name': 'page-88', 'url': '/coocs', 'label': 'Coocs', 'container': mempy_coocs_layout, 'in_nav': False},
-    {'name': 'page-99', 'url': '/doc', 'label': 'Project Doc', 'container': doc_page_layout, 'in_nav': not IS_PROD}
+    {'name': 'page-99', 'url': '/doc', 'label': 'Project Doc', 'container': doc_page_layout, 'in_nav': False}
 ]
 
 # Collapsable navbar component

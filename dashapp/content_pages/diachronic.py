@@ -51,7 +51,7 @@ diachro_selects = html.Div([
 diachronic_card = dbc.Card([
     dbc.Row([
         dbc.Col([
-            html.H2('Diachronic Overview'),
+            html.H2('Exploring topic changes over time'),
         ]),
     ], className='title-row'),
     dbc.Row([
@@ -75,7 +75,8 @@ diachronic_layout = dbc.Container([
 
 
 @callback(
-    Output('diachro-page-histo', 'figure'),
+    [Output('diachro-page-histo', 'figure'),
+     Output('diachro-page-included-label', 'children')],
     [Input('diachro-page-val-radio', 'value'),
      Input('diachro-page-journals-checklist', 'value'),
      Input('diachro-page-lang-checklist', 'value'),]
@@ -86,12 +87,16 @@ def update_diachronic_histo(val, journals, languages):
 
     if val == 'avg':
         df = DM.DOCTOPICS_DF.loc[DM.METADATA_DF['lang'].isin(languages)] \
-            .loc[DM.METADATA_DF['journal_id'].isin(journals)].groupby(DM.METADATA_DF['period']).mean()
+            .loc[DM.METADATA_DF['journal_id'].isin(journals)]
+        n_docs = len(df)
+        df = df.groupby(DM.METADATA_DF['period']).mean()
         df.columns = df.columns.map(DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'])
         x, y, color = df.index, df.columns, None
     else:
         df = DM.METADATA_DF.loc[DM.METADATA_DF['lang'].isin(languages)] \
-            .loc[DM.METADATA_DF['journal_id'].isin(journals)].groupby(['period', 'dom_topic']).size().reset_index(name='counts')
+            .loc[DM.METADATA_DF['journal_id'].isin(journals)]
+        n_docs = len(df)
+        df = df.groupby(['period', 'dom_topic']).size().reset_index(name='counts')
         df['counts'] = df.groupby('period')['counts'].apply(lambda x: x / x.sum())
         df['dom_topic'] = df['dom_topic'].map(DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'])
         x, y, color = 'period', 'counts', 'dom_topic'
@@ -109,6 +114,7 @@ def update_diachronic_histo(val, journals, languages):
                       xaxis_title='Time periods',
                       yaxis_title='Topic distributions')\
         .update_traces(marker_line_width=0.0, selector={'type': 'bar'})
-    return fig
+
+    return fig, f'Total Included Articles: {n_docs}'
 
 

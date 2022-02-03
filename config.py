@@ -46,6 +46,7 @@ MARKDOWNS_DICT = {
     'TOPICDETAILS': BASE_STORAGE_PATH / 'markdowns/topicdetails.md',
     'TOPICVIZ': BASE_STORAGE_PATH / 'markdowns/topicviz.md',
     'META_SUNBURST': BASE_STORAGE_PATH / 'markdowns/meta_sunburst.md',
+    'SUBTITLES': BASE_STORAGE_PATH / 'markdowns/subtitles.md',
 }
 
 

@@ -178,7 +178,7 @@ citations_details_div = html.Div([
 topic_details_card = dbc.Card([
     dbc.Row([
         dbc.Col([
-            html.H2('Topic Details'),
+            html.H2('Exploring topics'),
         ]),
     ], className='title-row'),
 

@@ -10,9 +10,10 @@ page_name = 'home_page'
 pres_card = dbc.Card([
     dbc.CardBody([
         dbc.Row([
-            dbc.Col(
-                html.H2('Eight journals over eight decades: a computational topic-modeling approach to contemporary philosophy of science'),
-                style={'padding': '0 3rem'}
+            dbc.Col([
+                html.H2('The philosophy of science through the lens of topic-modeling '),
+                dcc.Markdown(MD.SUBTITLES, className='content-text-small'),
+                ], style={'padding': '0 3rem'}
             ),
         ], className='title-row'),
 
@@ -23,12 +24,12 @@ pres_card = dbc.Card([
             dbc.Col([
                 dcc.Markdown(MD.HOWTO, className='content-text'),
             ], lg=6, style={'padding': '0 3rem'}),
-        ], justify='around', style={'padding-bottom': '1.5rem'}),
+        ], justify='between', style={'padding-bottom': '1.5rem'}),
 
         dbc.Row([
             dbc.Col('', lg=1),
             dbc.Col([
-                dcc.Markdown('**Related Publications:**  \n' + MD.REFERENCES, className='content-text-small', style={'text-align': 'left'})
+                dcc.Markdown(MD.REFERENCES, className='content-text-small', style={'text-align': 'left'})
             ], lg=12, style={'padding': '0 3rem'})
         ], justify='left')
     ])
@@ -40,7 +41,7 @@ home_layout = dbc.Container([
     dbc.Row([
        dbc.Col([
            pres_card
-       ], lg=10),
+       ], lg=12),
     ], justify='center'),
 
 ], id='home-layout', className='std-content-div', fluid=True)

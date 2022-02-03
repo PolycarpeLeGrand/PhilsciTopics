@@ -82,9 +82,8 @@ article_details_div = html.Div([
     dbc.Row([
         dbc.Col([
             # Author date
-            html.H4('Click a point on the graph to see article details', id='topic-viz-page-details-head'),
+            html.H4('To visualize the topic distribution of any article, simply click on the corresponding dot in the scatter-plot diagram.', id='topic-viz-page-details-head'),
             # Full citation collapse
-            html.Span('Title: ', className='content-text-small font-weight-bold'),
             html.Span(className='content-text-small', id='topic-viz-page-details-title'),
         ]),
     ]),
@@ -114,7 +113,6 @@ article_details_div = html.Div([
 
     dbc.Row([
         dbc.Col([
-            html.Span('Full citation: ', className='content-text-small font-weight-bold'),
             html.Span(id='topic-viz-page-details-citation', className='content-text-small'),
         ]),
     ])
@@ -147,7 +145,7 @@ article_details_div = html.Div([
 topic_main_card = dbc.Card([
     dbc.Row([
         dbc.Col(
-            html.H2('Topic Visualizations')
+            html.H2('Visualizing topics throughout the corpus')
         )
     ], className='title-row'),
 
@@ -195,7 +193,7 @@ def make_topicsviz_2d_scatter(df):
                      hover_data={
                          'Title': df['title'].map(lambda x: x if len(x) < 60 else x[:60] + '...'),
                          'Main Topic': df['dom_topic_name'],
-                         'Category': df['dom_topic_name'].map(DM.TOPIC_MAPPINGS_DF['cluster_name']),
+                         # 'Category': df['dom_topic_name'].map(DM.TOPIC_MAPPINGS_DF['cluster_name']),
                          'Journal': df['journal_id'],
                          'Period': df['period'],
                          'Language': df['lang'],
@@ -275,21 +273,19 @@ def update_topic_viz_graph(n_dims, periods, journals, languages):
 
 @callback(
     [Output('topic-viz-page-details-head', 'children'),
-     Output('topic-viz-page-details-title', 'children'),
      Output('topic-viz-page-details-journal', 'children'),
      Output('topic-viz-page-details-period', 'children'),
      Output('topic-viz-page-details-lang', 'children'),
      Output('topic-viz-page-details-tokens', 'children'),
-     Output('topic-viz-page-details-pie', 'figure'),
-     Output('topic-viz-page-details-citation', 'children')],
+     Output('topic-viz-page-details-pie', 'figure'),],
     [Input('topic-viz-page-scatter', 'clickData')], prevent_initial_call=True
 )
 def update_topicsvix_article_details(click_data):
     article_id = click_data['points'][0]['customdata'][0]
     article_data = DM.METADATA_DF.loc[article_id]
 
-    head = f'Selected Article: {article_data["author"]} ({article_data["year"]})'
-    title = article_data['title']
+    head = article_data['citation']#f'Selected Article: {article_data["author"]} ({article_data["year"]})'
+    # title = article_data['title']
     journal = article_data['journal_id']
     lang = article_data['lang']
     period = article_data['period']
@@ -322,7 +318,7 @@ def update_topicsvix_article_details(click_data):
     fig.update_traces(textposition='inside', textinfo='percent+label')
     fig.update_layout(paper_bgcolor='#fcfcfc', showlegend=False)
 
-    return head, title, journal, period, lang, tokens, fig, citation
+    return head, journal, period, lang, tokens, fig
 
 '''
 @callback(
