@@ -78,6 +78,10 @@ text_controls_div = html.Div([
     ]),
 ])
 
+article_details_placeholder = html.Div([
+    html.H4('To visualize the topic distribution of any article, simply click on the corresponding dot in the scatter-plot diagram.'),
+], id='topic-viz-details-placeholder')
+
 article_details_div = html.Div([
     dbc.Row([
         dbc.Col([
@@ -116,7 +120,7 @@ article_details_div = html.Div([
             html.Span(id='topic-viz-page-details-citation', className='content-text-small'),
         ]),
     ])
-])
+], id='topic-viz-details-div', style={'visibility': 'hidden'})
 
 '''
     dbc.Row([
@@ -159,6 +163,7 @@ topic_main_card = dbc.Card([
         dbc.Col([
             text_controls_div,
             html.Hr(style={'margin': '2rem'}),
+            article_details_placeholder,
             article_details_div
         ], lg=4, className='mt-5'),
         dbc.Col([
@@ -277,7 +282,9 @@ def update_topic_viz_graph(n_dims, periods, journals, languages):
      Output('topic-viz-page-details-period', 'children'),
      Output('topic-viz-page-details-lang', 'children'),
      Output('topic-viz-page-details-tokens', 'children'),
-     Output('topic-viz-page-details-pie', 'figure'),],
+     Output('topic-viz-page-details-pie', 'figure'),
+     Output('topic-viz-details-div', 'style'),
+     Output('topic-viz-details-placeholder', 'style')],
     [Input('topic-viz-page-scatter', 'clickData')], prevent_initial_call=True
 )
 def update_topicsvix_article_details(click_data):
@@ -318,7 +325,7 @@ def update_topicsvix_article_details(click_data):
     fig.update_traces(textposition='inside', textinfo='percent+label')
     fig.update_layout(paper_bgcolor='#fcfcfc', showlegend=False)
 
-    return head, journal, period, lang, tokens, fig
+    return head, journal, period, lang, tokens, fig, {'visibility': 'visible'}, {'visibility': 'hidden'}
 
 '''
 @callback(
