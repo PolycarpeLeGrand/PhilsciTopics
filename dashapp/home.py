@@ -13,24 +13,24 @@ pres_card = dbc.Card([
             dbc.Col([
                 html.H2('The philosophy of science through the lens of topic-modeling '),
                 dcc.Markdown(MD.SUBTITLES, className='content-text-small'),
-                ], style={'padding': '0 3rem'}
+                ], #style={'padding': '0 3rem'}
             ),
         ], className='title-row'),
 
         dbc.Row([
             dbc.Col([
                 dcc.Markdown(MD.PRESENTATION, className='content-text'),
-            ], lg=6, style={'padding': '0 3rem'}),
+            ], lg=6, ), #style={'padding': '0 3rem'}),
             dbc.Col([
                 dcc.Markdown(MD.HOWTO, className='content-text'),
-            ], lg=6, style={'padding': '0 3rem'}),
+            ], lg=6, ),#style={'padding': '0 3rem'}),
         ], justify='between', style={'padding-bottom': '1.5rem'}),
 
         dbc.Row([
             dbc.Col('', lg=1),
             dbc.Col([
                 dcc.Markdown(MD.REFERENCES, className='content-text-small', style={'text-align': 'left'})
-            ], lg=12, style={'padding': '0 3rem'})
+            ], lg=12, ), #style={'padding': '0 3rem'})
         ], justify='left')
     ])
 ],  className='content-card')
@@ -42,7 +42,7 @@ home_layout = dbc.Container([
        dbc.Col([
            pres_card
        ], lg=12),
-    ], justify='center'),
+    ]),
 
 ], id='home-layout', className='std-content-div', fluid=True)
 
