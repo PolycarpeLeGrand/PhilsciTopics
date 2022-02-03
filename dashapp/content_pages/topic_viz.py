@@ -325,7 +325,7 @@ def update_topicsvix_article_details(click_data):
     fig.update_traces(textposition='inside', textinfo='percent+label')
     fig.update_layout(paper_bgcolor='#fcfcfc', showlegend=False)
 
-    return head, journal, period, lang, tokens, fig, {'visibility': 'visible'}, {'visibility': 'hidden'}
+    return head, journal, period, lang, tokens, fig, {'visibility': 'visible'}, {'display': 'none'}
 
 '''
 @callback(
