@@ -29,14 +29,10 @@ corpus_lang_select = dbc.Row([
 
 
 corpus_sun_inputs = html.Div([
-    dbc.Row([
-        dbc.Col([
-            dbc.Label('Selected Period:', id='corpus-page-sun-period', className='content-text font-weight-bold'),
-        ], width='auto'),
-    ], justify='start'),
 
     dbc.Row([
         dbc.Col([
+            dbc.Label('Selected Period:', id='corpus-page-sun-period', className='content-text font-weight-bold'),
             dcc.RangeSlider(
                 min=0,
                 max=len(DM.METADATA_DF['period'].unique()) - 1,
@@ -47,23 +43,18 @@ corpus_sun_inputs = html.Div([
                 },
                 id='corpus-page-sun-slider',
                 className='pl-0'
-            )
-        ], style={'max-width': '20rem'})
-    ], justify='start'),
-
+            ),
+        ], lg=9),
+    ]),
     dbc.Row([
         dbc.Col([
-            dbc.Label('Total Articles: ', id='corpus-page-sun-total', className='content-text'),
-        ], width='auto')
-    ], justify='start', style={'padding-top': '2rem'}),
-
-    dbc.Row([
+            dcc.Markdown(id='corpus-page-sun-lang', className='content-text-small', style={'width': 'fit-content'}),
+        ], lg=6),
         dbc.Col([
-            dcc.Markdown(id='corpus-page-sun-lang', className='content-text-small')
-        ])
-    ], justify='start', style={'padding-top': '0.5rem'})
-
-], style={'margin-top': '5rem'})
+            dbc.Label('Total Articles: ', id='corpus-page-sun-total', className='content-text font-weight-bold'),
+        ], lg=6),
+    ], style={'margin-top': '1rem'}),
+], style={'margin-top': '2rem'})
 
 
 corpus_page_main_card = dbc.Card([
@@ -76,11 +67,11 @@ corpus_page_main_card = dbc.Card([
             dbc.Col([
                 dcc.Markdown(MD.METADATA, className='content-text'),
                 # corpus_lang_select,
-            ], lg=4),
+            ], lg=3),
             dbc.Col([
                 dbc.Spinner(dcc.Graph(id='corpus-page-bar')),
                 corpus_lang_select,
-            ], style={'padding-left': '2rem'}, lg=8),
+            ], lg=9),
         ]),
 
         # Hr
@@ -93,20 +84,13 @@ corpus_page_main_card = dbc.Card([
         # Sunburst section
         dbc.Row([
             dbc.Col([
-                dcc.Markdown(MD.META_SUNBURST, className='content-text')
-            ], lg=4)
-        ]),
-
-        dbc.Row([
+                dcc.Markdown(MD.META_SUNBURST, className='content-text'),
+                corpus_sun_inputs,
+            ], lg=3),
             dbc.Col([
                 dbc.Spinner(dcc.Graph('corpus-page-sun-graph', style={'height': '50vh', 'max-height': '90vw', 'width': '50vh', 'max-width': '90vw'})),
-            ], width='auto', style={'padding-left': '2rem'}),
-            dbc.Col([
-                corpus_sun_inputs,
-            ]),
-
-        ])
-
+            ], lg=9, style={'padding-left': '2rem'}),
+        ]),
     ])
 ],  className='content-card')
 

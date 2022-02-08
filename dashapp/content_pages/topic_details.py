@@ -1,5 +1,4 @@
-from dash import Dash, dcc, html, Input, Output, State, callback
-import dash_table
+from dash import Dash, dcc, html, Input, Output, State, callback, dash_table
 import dash_bootstrap_components as dbc
 import plotly.express as px
 import plotly.graph_objects as go
@@ -9,11 +8,6 @@ from dashapp import cache, DM, MD
 
 page_name = 'topic_details'
 
-wordcloud_div = html.Div([
-    dbc.Spinner(html.Img(src='assets/wordclouds/wc_topic_0.png',
-             style={'width': '100%', 'border': 'solid', 'border-width': '1px'},
-             id='topics-details-page-wordcloud')),
-])
 
 word_vert_radios = html.Div([
     dbc.RadioItems(
@@ -53,10 +47,13 @@ top_words_table_div = html.Div([
     )
 ])
 
+word_details_graph = dbc.Spinner(dcc.Graph(id='topic-details-page-word-pie',
+                          style={'width': '24rem', 'height': '24rem', 'border': '1px solid rgb(211, 211, 211)',
+                                 'border-top': 'none'}))
+
 word_details_div = html.Div([
     dbc.Row([
         dbc.Col([
-            # word_vert_radios
             top_words_table_div
         ], width='auto', style={'padding': '0'}),
         dbc.Col([
@@ -66,17 +63,56 @@ word_details_div = html.Div([
                                 'display': 'flex', 'justify-content': 'center',
                                 'align-items': 'center', 'border-bottom': '1px solid rgb(211, 211, 211)',
                                 'border-left': '1px solid rgb(211, 211, 211)'}),
-                dbc.Spinner(dcc.Graph(id='topic-details-page-word-pie',
-                          style={'width': '24rem', 'height': '24rem', 'border': '1px solid rgb(211, 211, 211)',
-                                 'border-top': 'none'}))
+                word_details_graph,
             ])
         ], width='auto', style={'padding': '0'}),
     ],
         style={'border': '2px solid rgb(211, 211, 211)', 'width': 'fit-content'}
     ),
+], style={'margin-left': '15px'})
+
+
+select_div = html.Div([
+            dbc.Row([
+                dbc.Col([
+                    html.Span('Select a Topic:', className='content-text-large', style={'margin-right': '1rem'}),
+                ], width='auto', align='center'),
+                dbc.Col([
+                    dbc.Select(
+                        options=[
+                            {'label': v, 'value': t} for t, v in
+                            DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'].sort_values().iteritems()
+                        ],
+                        value=DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'].sort_values().index[0],
+                        id='topic-details-page-topic-select',
+                        style={'min-width': '8rem'},
+                    ),
+                ]),
+            ], justify='start', no_gutters=True),
+            dbc.Row([
+                dbc.Col([
+                    dcc.Markdown(MD.TOPICDETAILS, className='content-text'),
+                ])
+            ], style={'margin-top': '1rem'}),
 ])
 
+wordcloud_div = html.Div([
+    dbc.Row([
+        dbc.Col([
+            dbc.Spinner(html.Img(src='assets/wordclouds/wc_topic_0.png',
+                                 style={'width': '100%', 'border': 'solid', 'border-width': '1px', 'max-width': '800px'},
+                                 id='topics-details-page-wordcloud')),
+        ]),
+    ], justify='around'),
+])
+
+
 citations_control_div = html.Div([
+
+    dbc.Row([
+        dbc.Col([
+            dcc.Markdown(MD.TOPICDETAILS_WORDS, className='content-text')]),
+    ]),
 
     dbc.Row([
 
@@ -97,7 +133,7 @@ citations_control_div = html.Div([
                 id='topic-details-page-periods-slider',
                 className='pl-0'
             )
-        ],)
+        ], lg=6)
     ], style={'margin-bottom': '1rem'}),
 
     dbc.Row([
@@ -108,10 +144,7 @@ citations_control_div = html.Div([
                 value=[j for j in DM.METADATA_DF['journal_id'].unique()],
                 id='topic-details-page-journals-checklist',
             ),
-        ],),
-    ], style={'margin-bottom': '1rem'}),
-
-    dbc.Row([
+        ], lg=6),
         dbc.Col([
             dbc.Label('Languages to include', className='content-text-small font-weight-bold'),
             dbc.Checklist(
@@ -121,8 +154,8 @@ citations_control_div = html.Div([
             ),
             dbc.Label('Total Included Articles: ', className='content-text-small font-weight-bold',
                       style={'padding-top': '1rem'}, id='topic-details-page-included-label')
-        ],),
-    ]),
+        ], lg=6),
+    ], style={'margin-bottom': '1rem'}),
 ])
 
 citations_table_div = html.Div([
@@ -145,7 +178,7 @@ citations_table_div = html.Div([
                 {'selector': '.dash-table-container', 'rule': 'font-family: inherit'},
             ],
         style_cell_conditional=[
-            {'if': {'column_id': 'citation'}, 'textAlign': 'left', 'maxWidth': '800px'},
+            {'if': {'column_id': 'citation'}, 'textAlign': 'left', 'maxWidth': '25vw'}, #800px
             {'if': {'column_id': 'rank'}, 'textAlign': 'center'},
             {'if': {'column_id': 'weight'}, 'textAlign': 'center'},
             {'if': {'column_id': 'art_id'}, 'display': 'none'},
@@ -173,62 +206,60 @@ citations_details_div = html.Div([
     ],
         style={'border': '2px solid rgb(211, 211, 211)', 'width': 'fit-content'}
     ),
-], style={'margin-top': '5rem'})
+], style={'margin-left': '15px'})
 
 topic_details_card = dbc.Card([
+
+    # Title row
     dbc.Row([
         dbc.Col([
             html.H2('Exploring topics'),
         ]),
     ], className='title-row'),
 
+    # Select and wordcloud row
     dbc.Row([
         dbc.Col([
-            dcc.Markdown(MD.TOPICDETAILS, className='content-text'),
-            dbc.Select(
-                options=[
-                    {'label': v, 'value': t} for t, v in
-                    DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'].sort_values().iteritems()
-                ],
-                value=DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'].sort_values().index[0],
-                id='topic-details-page-topic-select'
-            ),
-        ], lg=6),
+            select_div
+        ], lg=3),
         dbc.Col([
-            # dcc.Graph(figure=make_words_topics_barchart())
-        ]),
+            wordcloud_div,
+            #word_details_div
+        ], lg=9),
     ]),
 
     dbc.Row([
         dbc.Col([
-            wordcloud_div
-        ], lg=6, style={'margin-right': '2rem'}),
-        dbc.Col([
-            word_details_div
-        ], lg='auto'),
-    ], style={'margin-top': '2rem'}),
-
-    dbc.Row([
-        dbc.Col([
+            #word_details_div,
             html.Hr(style={'margin': '2rem'})
         ])
     ]),
 
+    # Words row
     dbc.Row([
         dbc.Col([
-            dcc.Markdown(
-                'Top articles for the selected topic. Use the controls to select which periods, journals and languages to include.',
-                className='content-text')
-        ], lg=6),
+            dcc.Markdown(MD.TOPICDETAILS_WORDS, className='content-text')
+        ], lg=3),
+        dbc.Col([
+            word_details_div
+        ], lg=9),
     ]),
 
     dbc.Row([
         dbc.Col([
+            #word_details_div,
+            html.Hr(style={'margin': '2rem'})
+        ])
+    ]),
+
+    # Citations Row
+    dbc.Row([
+        dbc.Col([
             citations_control_div,
-        ], lg=2),
+        ], lg=3),
         dbc.Col([
             citations_details_div
-        ], lg='auto'),
+        ], lg=9),
     ]),
 
 ], body=True, className='content-card')

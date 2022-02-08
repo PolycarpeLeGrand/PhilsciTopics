@@ -1,3 +1,2 @@
-Select a topic to show details.
-The wordcloud shows which words are the most strongly associated with a topic, with a more complete breakdown of the 10 most important words and their topic profile on the right. 
-The citations and topic distributions of the 10 articles in which the selected topic is most prominent are also displayed below.
+The wordcloud gives an overview of the words most strongly associated with the selected topic.
+Scroll down for a more detailed breakdown of the top words and their respective topic profiles, as well as for a sample of the articles most representative of this topic.

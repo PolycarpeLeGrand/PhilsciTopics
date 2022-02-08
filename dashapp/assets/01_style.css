@@ -51,6 +51,10 @@ body {
     font-size: 0.8rem;
 }
 
+.content-text-large {
+    font-size: 1.1rem;
+}
+
 .content-card, .content-jumbotron  {
     background-color: var(--c-bg-content);
     border: 1px solid var(--c-darkgray);

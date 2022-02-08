@@ -16,12 +16,6 @@ page_name = 'topic_viz'
 
 text_controls_div = html.Div([
 
-    #dbc.Row([
-    #    dbc.Col(
-    #        dcc.Markdown(MD.TOPICVIZ, className='content-text')
-    #    )
-    #], style={'margin-bottom': '2rem'}),
-
     dbc.Row([
         dbc.Col([
             dbc.Label('Representation type', className='content-text-small font-weight-bold'),
@@ -122,29 +116,6 @@ article_details_div = html.Div([
     ])
 ], id='topic-viz-details-div', style={'visibility': 'hidden'})
 
-'''
-    dbc.Row([
-        dbc.Col(
-            dbc.Button('Show Full Citation', id='topic-viz-page-details-button', color='link')
-        ),
-    ]),
-
-
-    dbc.Row(
-        dbc.Col(
-            dbc.Collapse(
-                dbc.Card(
-                    'No article selected',
-                    id='topic-viz-page-details-citation',
-                    body=True,
-                    className='content-text-small'
-                ),
-                id='topic-viz-page-details-collapse',
-                is_open=False
-            ),
-        ),
-    ),
-'''
 
 topic_main_card = dbc.Card([
     dbc.Row([
@@ -155,26 +126,16 @@ topic_main_card = dbc.Card([
 
     dbc.Row([
         dbc.Col([
-            dcc.Markdown(MD.TOPICVIZ, className='content-text')
-        ], lg=6, style={'margin-bottom': '2rem'}),
-    ]),
-
-    dbc.Row([
-        dbc.Col([
+            dcc.Markdown(MD.TOPICVIZ, className='content-text', style={'margin-bottom': '2rem'}),
             text_controls_div,
-            html.Hr(style={'margin': '2rem'}),
+            html.Hr(),
             article_details_placeholder,
-            article_details_div
-        ], lg=4, className='mt-5'),
+            article_details_div,
+        ], lg=3),
         dbc.Col([
             dbc.Spinner(dcc.Graph(id='topic-viz-page-scatter', style={'height': '90vh', 'max-height': '100vw'})),
-        ])
-    ]),
+        ], lg=9),
 
-    dbc.Row([
-        dbc.Col([
-
-        ]),
     ]),
 
 ], className='content-card', body=True)
@@ -232,7 +193,7 @@ def make_topicsviz_3d_scatter(df):
                         hover_data={
                             'Title': df['title'].map(lambda x: x if len(x) < 60 else x[:60] + '...'),
                             'Main Topic': df['dom_topic_name'],
-                            'Category': df['dom_topic_name'].map(DM.TOPIC_MAPPINGS_DF['cluster_name']),
+                            # 'Category': df['dom_topic_name'].map(DM.TOPIC_MAPPINGS_DF['cluster_name']),
                             'Journal': df['journal_id'],
                             'Period': df['period'],
                             'Language': df['lang'],

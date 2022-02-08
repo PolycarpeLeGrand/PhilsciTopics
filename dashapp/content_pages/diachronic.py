@@ -8,6 +8,13 @@ page_name = 'diachronic_page'
 
 diachro_selects = html.Div([
 
+
+    dbc.Row([
+        dbc.Col([
+            dcc.Markdown('Explication', className='content-text'),
+        ]),
+    ]),
+
     dbc.Row([
         dbc.Col([
             dbc.Label('Data type', className='content-text-small font-weight-bold'),
@@ -32,9 +39,6 @@ diachro_selects = html.Div([
                 id='diachro-page-journals-checklist',
             ),
         ],),
-    ], style={'margin-bottom': '1rem'}),
-
-    dbc.Row([
         dbc.Col([
             dbc.Label('Languages to include', className='content-text-small font-weight-bold'),
             dbc.Checklist(
@@ -57,10 +61,10 @@ diachronic_card = dbc.Card([
     dbc.Row([
         dbc.Col([
             diachro_selects
-        ], lg=2),
+        ], lg=3),
         dbc.Col([
             dbc.Spinner(dcc.Graph(id='diachro-page-histo', style={'height': '80vh'})),
-        ]),
+        ], lg=9),
     ]),
 ], body=True, className='content-card')
 

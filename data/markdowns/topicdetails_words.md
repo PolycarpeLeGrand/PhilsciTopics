@@ -1,0 +1,2 @@
+The table shows the most important words for the selected topic with their respective weights. 
+Selecting a row will update the chart on the right to display to topic profile of the corresponding word.
