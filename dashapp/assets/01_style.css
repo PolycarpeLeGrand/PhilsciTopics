@@ -44,7 +44,7 @@ body {
 
 .content-text {
     font-size: 0.9rem;
-    text-align: justify;
+    /*text-align: justify;*/
 }
 
 .content-text-small {
