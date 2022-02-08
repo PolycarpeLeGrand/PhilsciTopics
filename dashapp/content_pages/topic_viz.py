@@ -73,7 +73,7 @@ text_controls_div = html.Div([
 ])
 
 article_details_placeholder = html.Div([
-    html.H4('To visualize the topic distribution of any article, simply click on the corresponding dot in the scatter-plot diagram.'),
+    html.Span('To visualize the topic distribution of any article, simply click on the corresponding dot in the scatter-plot diagram.', className='content-text'),
 ], id='topic-viz-details-placeholder')
 
 article_details_div = html.Div([
@@ -139,8 +139,10 @@ topic_main_card = dbc.Card([
     dbc.Row([
         dbc.Col([
             article_details_placeholder,
+        ], lg=3),
+        dbc.Col([
             article_details_div,
-        ]),
+        ], lg=5)
     ]),
 
 ], className='content-card', body=True)
@@ -291,7 +293,7 @@ def update_topicsvix_article_details(click_data):
     fig.update_traces(textposition='inside', textinfo='percent+label')
     fig.update_layout(paper_bgcolor='#fcfcfc', showlegend=False)
 
-    return head, journal, period, lang, tokens, fig, {'visibility': 'visible'}, {'display': 'none'}
+    return head, journal, period, lang, tokens, fig, {'visibility': 'visible'}, {} # 'display': 'none'
 
 '''
 @callback(
