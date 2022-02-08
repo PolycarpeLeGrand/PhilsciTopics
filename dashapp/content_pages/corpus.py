@@ -88,7 +88,7 @@ corpus_page_main_card = dbc.Card([
                 corpus_sun_inputs,
             ], lg=3),
             dbc.Col([
-                dbc.Spinner(dcc.Graph('corpus-page-sun-graph', ))#style={'height': '50vh', 'max-height': '90vw', 'width': '50vh', 'max-width': '90vw'})),
+                dbc.Spinner(dcc.Graph('corpus-page-sun-graph', style={'max-width': '600px'}))#style={'height': '50vh', 'max-height': '90vw', 'width': '50vh', 'max-width': '90vw'})),
             ], lg=9, style={'padding-left': '2rem'}),
         ]),
     ])
