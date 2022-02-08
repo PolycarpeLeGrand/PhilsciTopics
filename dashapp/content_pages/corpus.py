@@ -48,11 +48,11 @@ corpus_sun_inputs = html.Div([
     ]),
     dbc.Row([
         dbc.Col([
-            dcc.Markdown(id='corpus-page-sun-lang', className='content-text-small', style={'width': 'fit-content'}),
-        ], lg=6),
+            dcc.Markdown(id='corpus-page-sun-lang', className='content-text-small'),
+        ], lg=6, style={'min-width': '12rem'}),
         dbc.Col([
             dbc.Label('Total Articles: ', id='corpus-page-sun-total', className='content-text font-weight-bold'),
-        ], lg=6),
+        ], lg=6, style={'min-width': '12rem'}),
     ], style={'margin-top': '1rem'}),
 ], style={'margin-top': '2rem'})
 
