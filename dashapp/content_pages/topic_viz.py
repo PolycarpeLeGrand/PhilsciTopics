@@ -128,14 +128,19 @@ topic_main_card = dbc.Card([
         dbc.Col([
             dcc.Markdown(MD.TOPICVIZ, className='content-text', style={'margin-bottom': '2rem'}),
             text_controls_div,
-            html.Hr(),
-            article_details_placeholder,
-            article_details_div,
+            #html.Hr(),
+
         ], lg=3),
         dbc.Col([
             dbc.Spinner(dcc.Graph(id='topic-viz-page-scatter', style={'height': '90vh', 'max-height': '100vw'})),
         ], lg=9),
+    ]),
 
+    dbc.Row([
+        dbc.Col([
+            article_details_placeholder,
+            article_details_div,
+        ]),
     ]),
 
 ], className='content-card', body=True)
