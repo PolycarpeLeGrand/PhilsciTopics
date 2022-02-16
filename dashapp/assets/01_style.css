@@ -26,11 +26,13 @@
 
     --media-large: 48em;
     --sidebar-width: 16rem;
+
+    --default-fonts: "Helvetica", sans-serif;
 }
 
 
 body {
-    font-family: "Helvetica", sans-serif;
+    font-family: var(--default-fonts);
     background-color: var(--c-bg-page);
 }
 

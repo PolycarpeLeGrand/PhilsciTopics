@@ -1,0 +1,7 @@
+/* CSS to override dash components default style */
+
+
+/* Dash tables */
+.dash-cell, .dash-header {
+    font-family: var(--default-fonts);
+}

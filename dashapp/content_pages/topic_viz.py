@@ -72,9 +72,11 @@ text_controls_div = html.Div([
     ]),
 ])
 
+
 article_details_placeholder = html.Div([
     html.Span('To visualize the topic distribution of any article, simply click on the corresponding dot in the scatter-plot diagram.', className='content-text'),
 ], id='topic-viz-details-placeholder')
+
 
 article_details_div = html.Div([
     dbc.Row([
@@ -132,7 +134,7 @@ topic_main_card = dbc.Card([
 
         ], lg=3),
         dbc.Col([
-            dbc.Spinner(dcc.Graph(id='topic-viz-page-scatter', style={'height': '90vh', 'max-height': '100vw'})),
+            dbc.Spinner(dcc.Graph(id='topic-viz-page-scatter', style={'height': '70vh', 'max-height': '70vw'})),
         ], lg=9),
     ]),
 

@@ -15,7 +15,6 @@ WORDS_1 = sorted(list(set(w for ws in COOC_SAMPLES.keys() for w in ws)))
 def cooc_select(label_text, component_id, words):
     return html.Div([
         dbc.Label(label_text, className='content-text', style={'padding-right': '0.5rem'}),
-
         dbc.Select(
             options=[
                 {'label': w, 'value': w} for w in words
