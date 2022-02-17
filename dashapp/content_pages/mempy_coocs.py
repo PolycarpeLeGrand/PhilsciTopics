@@ -2,7 +2,7 @@ from dash import Dash, dcc, html, Input, Output, State, callback
 import dash_bootstrap_components as dbc
 from config import BASE_STORAGE_PATH
 import pickle
-
+print('loaded coocs')
 page_name = 'mempy-coocs'
 COOC_SAMPLES = pickle.load(open(BASE_STORAGE_PATH / 'cooc_9_refs_sample_dict.p', 'rb'))
 

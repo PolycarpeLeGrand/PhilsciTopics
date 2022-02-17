@@ -1,38 +1,12 @@
 Dataframe Doc
 ======
 
-Loaded 6 dataframes:
+Loaded 4 dataframes:
 
-* TEST_DF - A simple test dataframe
-* TEST_DF_2  
 * DOCTOPICS_DF  
 * METADATA_DF  
 * TOPIC_MAPPINGS_DF  
 * TOPICWORDS_DF  
-
-TEST_DF
----
-
-##### **Description:** A simple test dataframe
-
-Rows: 20, Columns: 10, Total values: 200
-
-Index (30 first): 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
-
-Columns (30 first): a, b, c, d, e, f, g, h, i, j
-
-
-
-TEST_DF_2
----
-
-Rows: 20, Columns: 10, Total values: 200
-
-Index (30 first): 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19
-
-Columns (30 first): a, b, c, d, e, f, g, h, i, j
-
-
 
 DOCTOPICS_DF
 ---

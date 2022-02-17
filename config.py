@@ -26,8 +26,8 @@ BASE_STORAGE_PATH = PROJECT_PATH / 'data'
 # Values can be either a path to the df or a tuple consisting of the path and a string (markdown) describing the df
 GENERATE_DF_DOC_FILE = True
 DATAFRAMES_DICT = {
-    'TEST_DF': (BASE_STORAGE_PATH / 'dataframes/test_data_df.p', 'A simple test dataframe'),
-    'TEST_DF_2': BASE_STORAGE_PATH / 'dataframes/test_data_df.p',
+    #'TEST_DF': (BASE_STORAGE_PATH / 'dataframes/test_data_df.p', 'A simple test dataframe'),
+    #'TEST_DF_2': BASE_STORAGE_PATH / 'dataframes/test_data_df.p',
     'DOCTOPICS_DF': BASE_STORAGE_PATH / 'dataframes/doctopics_df.p',
     'METADATA_DF': BASE_STORAGE_PATH / 'dataframes/metadata_df.p',
     'TOPIC_MAPPINGS_DF': BASE_STORAGE_PATH / 'dataframes/topic_mappings_df.p',

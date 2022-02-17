@@ -1,17 +1,14 @@
 from dash import Dash, dcc, html, Input, Output, State, callback
 import dash_bootstrap_components as dbc
 
-from dashapp.page_template import template_page_layout
-from dashapp.examples.centered_jumbo import centered_jumbo_layout
 from dashapp.examples.doc_page import doc_page_layout
-from dashapp.examples.df_doc_page import df_doc_page_layout
 
 from dashapp.home import home_layout
 from dashapp.content_pages.corpus import corpus_layout
 from dashapp.content_pages.topic_viz import topic_viz_layout
 from dashapp.content_pages.topic_details import topic_details_layout
 from dashapp.content_pages.diachronic import diachronic_layout
-from dashapp.content_pages.mempy_coocs import mempy_coocs_layout
+# from dashapp.content_pages.mempy_coocs import mempy_coocs_layout
 
 from config import NAV_TITLE, NAV_SUBTITLE, IS_PROD
 
@@ -27,7 +24,7 @@ PAGES = [
     {'name': 'page-2', 'url': '/topicviz', 'label': 'Topic Visualizations', 'container': topic_viz_layout, 'in_nav': True},
     {'name': 'page-3', 'url': '/topicdetails', 'label': 'Topic Details', 'container': topic_details_layout, 'in_nav': True},
     {'name': 'page-4', 'url': '/diachronic', 'label': 'Diachronic Overview', 'container': diachronic_layout, 'in_nav': True},
-    {'name': 'page-88', 'url': '/coocs', 'label': 'Coocs', 'container': mempy_coocs_layout, 'in_nav': False},
+    #{'name': 'page-88', 'url': '/coocs', 'label': 'Coocs', 'container': mempy_coocs_layout, 'in_nav': False},
     {'name': 'page-99', 'url': '/doc', 'label': 'Project Doc', 'container': doc_page_layout, 'in_nav': False}
 ]
 
