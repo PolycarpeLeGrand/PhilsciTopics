@@ -24,7 +24,7 @@
     --c-text-dark: black;
     --c-text-light: var(--c-light);
 
-    --media-large: 48em;
+    --media-large: 992px;
     --sidebar-width: 16rem;
 
     --default-fonts: "Helvetica", sans-serif;

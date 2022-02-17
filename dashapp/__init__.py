@@ -33,9 +33,10 @@ pio.templates['plotly'] = go.layout.Template(
         # Background color outside graph area, should match container background as set in CSS
         'paper_bgcolor': '#fcfcfc',
         # Graph area background
-        # 'plot_bgcolor': '#98AFBA',
+        'plot_bgcolor': '#fcfcfc',
         # Font property is a dict, family, size, color, etc.
-        'font': {'family': 'Helvetica, Sans-serif', 'color': '#212529'}
+        'font': {'family': 'Helvetica, Sans-serif', 'color': '#212529'},
+        'title_y': 1,
     }
 )
 

@@ -48,8 +48,7 @@ top_words_table_div = html.Div([
 ])
 
 word_details_graph = dbc.Spinner(dcc.Graph(id='topic-details-page-word-pie',
-                          style={'width': '24rem', 'height': '24rem', 'border': '1px solid rgb(211, 211, 211)',
-                                 'border-top': 'none'}))
+                          style={'width': '24rem', 'height': '24rem', 'padding-top': '1rem'}))
 
 word_details_div = html.Div([
     dbc.Row([
@@ -61,10 +60,9 @@ word_details_div = html.Div([
                 html.Div('Weight distribution across topics',
                          style={'height': '2rem', 'background': '#318e7d',
                                 'display': 'flex', 'justify-content': 'center',
-                                'align-items': 'center', 'border-bottom': '1px solid rgb(211, 211, 211)',
-                                'border-left': '1px solid rgb(211, 211, 211)'}),
+                                'align-items': 'center'}),
                 word_details_graph,
-            ])
+            ], style={'height': '100%', 'background': 'var(--c-gray)', 'border-left': '1px solid rgb(211, 211, 211)', 'border-bottom': '1px solid rgb(211, 211, 211)'})
         ], width='auto', style={'padding': '0'}),
     ],
         style={'border': '2px solid rgb(211, 211, 211)', 'width': 'fit-content'}
@@ -75,7 +73,7 @@ word_details_div = html.Div([
 select_div = html.Div([
             dbc.Row([
                 dbc.Col([
-                    html.Span('Select a Topic:', className='content-text-large', style={'margin-right': '1rem'}),
+                    html.Span('Select a topic:', className='content-text-large', style={'margin-right': '1rem'}),
                 ], width='auto', align='center'),
                 dbc.Col([
                     dbc.Select(
@@ -178,7 +176,7 @@ citations_table_div = html.Div([
                 {'selector': '.dash-table-container', 'rule': 'font-family: inherit'},
             ],
         style_cell_conditional=[
-            {'if': {'column_id': 'citation'}, 'textAlign': 'left', 'maxWidth': '25vw'}, #800px
+            {'if': {'column_id': 'citation'}, 'textAlign': 'left', 'width': '30vw'}, #800px
             {'if': {'column_id': 'rank'}, 'textAlign': 'center'},
             {'if': {'column_id': 'weight'}, 'textAlign': 'center'},
             {'if': {'column_id': 'art_id'}, 'display': 'none'},
@@ -191,22 +189,21 @@ citations_details_div = html.Div([
         dbc.Col([
             # word_vert_radios
             citations_table_div
-        ], width='auto', style={'padding': '0'}),
+        ], width='auto', style={'padding': '0', 'border': '2px solid rgb(211, 211, 211)', 'border-right': '1px solid rgb(211, 211, 211)',}),
         dbc.Col([
             html.Div([
                 html.Div('Article topic distribution',
                          style={'height': '2.5rem', 'background': '#318e7d',
                                 'display': 'flex', 'justify-content': 'center',
-                                'align-items': 'center', 'border-left': '1px solid rgb(211, 211, 211)'}),
+                                'align-items': 'center', }),
                 dbc.Spinner(dcc.Graph(id='topic-details-page-citations-pie',
-                          style={'width': '25rem', 'height': '25rem', 'border': '1px solid rgb(211, 211, 211)',
-                                 'border-top': 'none', 'margin-top': '1px'}))
-            ])
-        ], width='auto', style={'padding': '0', 'background': 'rgb(241, 241, 241)'}),
+                          style={'width': '24rem', 'height': '24rem', 'padding-top': '1rem'}))
+            ], style={'height': '100%', }),
+        ], width='auto', style={'padding': '0', 'background': 'rgb(241, 241, 241)', 'border': '2px solid rgb(211, 211, 211)', 'border-left': '0px solid rgb(211, 211, 211)'}),
     ],
-        style={'border': '2px solid rgb(211, 211, 211)', 'width': 'fit-content'}
+        style={'max-width': 'fit-content', 'min-width': '920px', 'margin-left': '15px'}
     ),
-], style={'margin-left': '15px'})
+], style={'margin-left': '-15px', 'overflow-x': 'auto'})
 
 topic_details_card = dbc.Card([
 
@@ -309,26 +306,10 @@ def make_words_topics_fig(word=None):
                      'color_code_topic'].to_dict(),
                  title=word)
 
-    fig.update_traces(textposition='inside', texttemplate='%{label} <br>%{value:.5f}')
+    fig.update_traces(textposition='inside', texttemplate='%{label} <br>%{value:.5f}',
+                      hovertemplate='%{label}<br>Weight=%{value:.5f}')
     fig.update_layout(paper_bgcolor='rgb(241, 241, 241)', showlegend=False, title=f'"{word}" topic weights',
-                      margin={'l': 0, 'r': 0, 't': 52, 'b': 12})
-    '''
-    fig = go.Figure()
-    for t in df.index:
-        fig.add_trace(go.Bar(
-            y=df.columns,
-            x=df.loc[t],
-            name=t,
-            orientation='h',
-            marker=dict(
-                color='rgba(246, 78, 139, 0.6)',
-                # line=dict(color='rgba(246, 78, 139, 1.0)', width=3)
-            )
-        ))
-
-    fig.update_layout(barmode='stack')
-    '''
-    # fig = px.bar(df, x=df.columns, y=df.index)
+                      margin={'l': 0, 'r': 0, 't': 30, 'b': 10})
 
     return fig
 
@@ -384,7 +365,7 @@ def update_topic_details_citations(periods, journals, languages, topic):
            #citations_children
 
 
-def make_citation_topics_fig(article=None):
+def make_citation_topics_fig(article):
     #words = DM.TOPICWORDS_DF.loc['topic_0'].nlargest(10)
     # print(words)
 
@@ -404,9 +385,10 @@ def make_citation_topics_fig(article=None):
                  color_discrete_map=DM.TOPIC_MAPPINGS_DF.set_index('cluster_letter_+_topic_(id)')[
                      'color_code_topic'].to_dict())
 
-    fig.update_traces(textposition='inside', texttemplate='%{label} <br>%{value:.5f}')
+    fig.update_traces(textposition='inside', textinfo='percent+label',
+                      hovertemplate='%{label}<br>Weight=%{value:.4f}')
     fig.update_layout(paper_bgcolor='rgb(241, 241, 241)', showlegend=False,
-                      margin={'l': 0, 'r': 0, 't': 52, 'b': 12})
+                      margin={'l': 0, 'r': 0, 't': 30, 'b': 10})
 
     return fig
 

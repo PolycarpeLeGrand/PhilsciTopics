@@ -32,7 +32,7 @@ corpus_sun_inputs = html.Div([
 
     dbc.Row([
         dbc.Col([
-            dbc.Label('Selected Period:', id='corpus-page-sun-period', className='content-text font-weight-bold'),
+            dbc.Label('Include periods:', id='corpus-page-sun-period', className='content-text font-weight-bold'),
             dcc.RangeSlider(
                 min=0,
                 max=len(DM.METADATA_DF['period'].unique()) - 1,
@@ -44,7 +44,7 @@ corpus_sun_inputs = html.Div([
                 id='corpus-page-sun-slider',
                 className='pl-0'
             ),
-        ], lg=9),
+        ], lg=9, width=5),
     ]),
     dbc.Row([
         dbc.Col([
@@ -86,9 +86,9 @@ corpus_page_main_card = dbc.Card([
             dbc.Col([
                 dcc.Markdown(MD.META_SUNBURST, className='content-text'),
                 corpus_sun_inputs,
-            ], lg=3),
+            ], lg=3,),
             dbc.Col([
-                dbc.Spinner(dcc.Graph('corpus-page-sun-graph', style={'max-width': '600px'}))#style={'height': '50vh', 'max-height': '90vw', 'width': '50vh', 'max-width': '90vw'})),
+                dbc.Spinner(dcc.Graph('corpus-page-sun-graph', style={'width': '28rem', 'height': '28rem', 'margin-top': '5px'}))
             ], lg=9, style={'padding-left': '2rem'}),
         ]),
     ])
@@ -116,10 +116,18 @@ def update_journals_bar(checked_values):
     df = df.groupby(groups).size().reset_index(name='counts')
 
     ordered_periods = DM.METADATA_DF['period'].sort_values(key=lambda x: x.apply(lambda y: int(y[:4]))).unique()
-
     fig = px.bar(df, x='period', y='counts', color='journal_id',
                  category_orders={'period': ordered_periods},
-                 color_discrete_map=JOURNAL_COLORS,)
+                 color_discrete_map=JOURNAL_COLORS,
+                 hover_data={
+                     'Period': df['period'],
+                     'Journal': df['journal_id'],
+                     'Articles': df['counts'],
+                     'Period Total': df['period'].map(lambda x: df.groupby('period').sum().loc[x]),
+                     'period': None,
+                     'counts': None,
+                     'journal_id': None
+                 })
 
     fig.update_layout(legend_title='Journals', xaxis_title='Time periods',
                       yaxis_title='Number of articles', title='Number of Articles by Time Periods',
@@ -155,10 +163,20 @@ def update_sunburst(val):
     df = df.groupby(['journal_id', 'lang']).size().reset_index(name='counts')
 
     fig = px.sunburst(df, path=['journal_id', 'lang'], values='counts', color='journal_id',
-                      color_discrete_map=JOURNAL_COLORS, title='Journal and Language Distributions')
-
-    total_articles = df["counts"].sum()
+                      color_discrete_map=JOURNAL_COLORS, title='Journal and Language Distributions',
+                      hover_data={
+                          'Journal': df['journal_id'],
+                          'Language': df['lang'],
+                          'Articles': df['counts'],
+                          #'labels': None,
+                          # 'parents': None,
+                          #'id': None,
+                          #'journal_id': None
+                      })
+    fig.update_traces(hovertemplate='<b>%{id}</b><br>Articles=%{value}', selector={'type': 'sunburst'})
+    fig.update_layout(margin_t=60, margin_r=30, margin_b=30, margin_l=30)
+    total_articles = df['counts'].sum()
     lang_md = '  \n'.join(f'{i}: {v} ({(v/total_articles)*100:.2f}%)' for i, v in lang_counts.iteritems())
 
-    return f'Selected Period: {beg[:4]}-{end[-4:]}', f'Total Articles: {total_articles}', fig, lang_md
+    return f'Include periods: {beg[:4]}-{end[-4:]}', f'Total articles: {total_articles}', fig, lang_md
 

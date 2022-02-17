@@ -31,7 +31,7 @@ text_controls_div = html.Div([
         ], width=6),
 
         dbc.Col([
-            dbc.Label('Include Periods: ', className='content-text-small font-weight-bold',
+            dbc.Label('Include periods: ', className='content-text-small font-weight-bold',
                       id='topic-viz-page-periods-label'),
             dcc.RangeSlider(
                 min=0,
@@ -75,18 +75,17 @@ text_controls_div = html.Div([
 
 article_details_placeholder = html.Div([
     html.Span('To visualize the topic distribution of any article, simply click on the corresponding dot in the scatter-plot diagram.', className='content-text'),
-], id='topic-viz-details-placeholder')
+], id='topic-viz-details-placeholder', style={'margin-bottom': '1rem'})
 
 
 article_details_div = html.Div([
     dbc.Row([
         dbc.Col([
-            # Author date
-            html.H4('To visualize the topic distribution of any article, simply click on the corresponding dot in the scatter-plot diagram.', id='topic-viz-page-details-head'),
             # Full citation collapse
-            html.Span(className='content-text-small', id='topic-viz-page-details-title'),
-        ]),
-    ]),
+            html.Span('Selected article: ', className='content-text font-weight-bold'),
+            html.Span(className='content-text', id='topic-viz-page-details-head'),
+        ], lg=6),
+    ], style={'margin-bottom': '1.5rem'}),
 
     dbc.Row([
         dbc.Col([
@@ -95,25 +94,26 @@ article_details_div = html.Div([
             html.Br(),
             html.Span('Language: ', className='content-text-small font-weight-bold'),
             html.Span(className='content-text-small', id='topic-viz-page-details-lang'),
-        ], lg=6),
-        dbc.Col([
+            html.Br(),
             html.Span('Period: ', className='content-text-small font-weight-bold'),
             html.Span(className='content-text-small', id='topic-viz-page-details-period'),
             html.Br(),
             html.Span('Tokens: ', className='content-text-small font-weight-bold'),
             html.Span(className='content-text-small', id='topic-viz-page-details-tokens'),
-        ], lg=6),
+        ], lg=2, width=4),
+        dbc.Col([
+            dcc.Graph(id='topic-viz-page-details-pie', style={'height': '300px', 'width': '300px'})
+        ], lg=4, width=8),
     ]),
 
     dbc.Row([
         dbc.Col([
-            dcc.Graph(id='topic-viz-page-details-pie')
         ]),
     ]),
 
     dbc.Row([
         dbc.Col([
-            html.Span(id='topic-viz-page-details-citation', className='content-text-small'),
+            #html.Span(id='topic-viz-page-details-citation', className='content-text-small'),
         ]),
     ])
 ], id='topic-viz-details-div', style={'visibility': 'hidden'})
@@ -144,7 +144,7 @@ topic_main_card = dbc.Card([
         ], lg=3),
         dbc.Col([
             article_details_div,
-        ], lg=5)
+        ], lg=9)
     ]),
 
 ], className='content-card', body=True)
@@ -180,8 +180,10 @@ def make_topicsviz_2d_scatter(df):
                      category_orders={'dom_topic_name': ordered_topics})
     # color_discrete_sequence=px.colors.qualitative.Dark24, )
     fig.update_traces(marker={'size': 3})
-    fig.update_layout(legend_title='Topics', legend_itemsizing='constant', paper_bgcolor='#fcfcfc') \
-        .update_xaxes(range=[-100, 100]).update_yaxes(range=[-110, 110])
+    fig.update_layout(legend_title='Topics', legend_itemsizing='constant', paper_bgcolor='#fcfcfc',
+                      margin_t=60, margin_l=10, margin_b=60, margin_r=10) \
+        .update_xaxes(range=[-100, 100], showticklabels=False, title='')\
+        .update_yaxes(range=[-110, 110], showticklabels=False, title='')
     return fig
 
 
@@ -212,10 +214,20 @@ def make_topicsviz_3d_scatter(df):
                             'dom_topic': False,
                             'dom_topic_name': False},
                         custom_data=[df.index],
-                        category_orders={'dom_topic_name': ordered_topics})
+                        category_orders={'dom_topic_name': ordered_topics},
+                        #labels={'tsne_3d_z': ''}
+                        )
     # color_discrete_sequence=px.colors.qualitative.Dark24, )
-    fig.update_traces(marker={'size': 2})
-    fig.update_layout(legend_title='Topics', legend_itemsizing='constant', paper_bgcolor='#fcfcfc')
+    fig.update_traces(marker={'size': 2})\
+        .update_layout(legend_title='Topics', legend_itemsizing='constant', paper_bgcolor='#fcfcfc',
+                       margin_t=60, margin_l=10, margin_b=60, margin_r=10,)\
+        .update_scenes(xaxis={'showticklabels': False, 'title': {'text': ''}},
+                       yaxis={'showticklabels': False, 'title': {'text': ''}},
+                       zaxis={'showticklabels': False, 'title': {'text': ''}})
+        #.update_xaxes(visible=False, showticklabels=False)\
+        #.update_yaxes(visible=False, showticklabels=False)\
+        #.update_zaxes(visible=False, showticklabels=False)
+
     # fig.update_scenes(xaxis_visible=False, yaxis_visible=False, zaxis_visible=False)
 
     return fig
@@ -241,9 +253,9 @@ def update_topic_viz_graph(n_dims, periods, journals, languages):
 
     fig = make_topicsviz_2d_scatter(df) if int(n_dims) == 2 else make_topicsviz_3d_scatter(df)
 
-    return f'Include Periods: {ordered_periods[periods[0]][:4]} to {ordered_periods[periods[1]][-4:]}', \
+    return f'Include periods: {ordered_periods[periods[0]][:4]} to {ordered_periods[periods[1]][-4:]}', \
            fig, \
-           f'Total Included Articles: {len(df)}'
+           f'Total included articles: {len(df)}'
 
 
 @callback(
@@ -253,15 +265,14 @@ def update_topic_viz_graph(n_dims, periods, journals, languages):
      Output('topic-viz-page-details-lang', 'children'),
      Output('topic-viz-page-details-tokens', 'children'),
      Output('topic-viz-page-details-pie', 'figure'),
-     Output('topic-viz-details-div', 'style'),
-     Output('topic-viz-details-placeholder', 'style')],
+     Output('topic-viz-details-div', 'style'),],
     [Input('topic-viz-page-scatter', 'clickData')], prevent_initial_call=True
 )
 def update_topicsvix_article_details(click_data):
     article_id = click_data['points'][0]['customdata'][0]
     article_data = DM.METADATA_DF.loc[article_id]
 
-    head = article_data['citation']#f'Selected Article: {article_data["author"]} ({article_data["year"]})'
+    head = article_data["citation"]
     # title = article_data['title']
     journal = article_data['journal_id']
     lang = article_data['lang']
@@ -287,15 +298,18 @@ def update_topicsvix_article_details(click_data):
                  values='values',
                  names='topics',
                  color='topics',
-                 title='Topic Distribution',
+                 title='Article topic distribution',
                  color_discrete_map=DM.TOPIC_MAPPINGS_DF.set_index('cluster_letter_+_topic_(id)')[
                      'color_code_topic'].to_dict()
                  )
 
-    fig.update_traces(textposition='inside', textinfo='percent+label')
-    fig.update_layout(paper_bgcolor='#fcfcfc', showlegend=False)
+    fig.update_traces(textposition='inside', textinfo='percent+label',
+                      hovertemplate='%{label}<br>Weight=%{value:.4f}')
+    #fig.update_traces(hovertemplate='<b>%{id}</b><br>Articles=%{value}', selector={'type': 'sunburst'})
+    fig.update_layout(paper_bgcolor='#fcfcfc', showlegend=False,
+                      margin_t=30, margin_r=30, margin_b=30, margin_l=30)
 
-    return head, journal, period, lang, tokens, fig, {'visibility': 'visible'}, {} # 'display': 'none'
+    return head, journal, period, lang, tokens, fig, {'visibility': 'visible'}
 
 '''
 @callback(
