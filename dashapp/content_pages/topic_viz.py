@@ -298,7 +298,7 @@ def update_topicsvix_article_details(click_data):
                  values='values',
                  names='topics',
                  color='topics',
-                 title='Article topic distribution',
+                 title='Article Topic Distribution',
                  color_discrete_map=DM.TOPIC_MAPPINGS_DF.set_index('cluster_letter_+_topic_(id)')[
                      'color_code_topic'].to_dict()
                  )

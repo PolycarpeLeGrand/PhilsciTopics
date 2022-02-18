@@ -30,6 +30,7 @@ def make_anim_graph(frame_duration=2000, transition_duration=1000, transition_ea
                      'avg_weight': None,
                  })\
         .update_layout(bargap=0,
+                       legend_title='Topics',
                        xaxis_title='Topics',
                        yaxis_title='Average topic weights',
                        xaxis={'categoryorder': 'array', 'categoryarray': df[df['period']==ordered_periods[0]].sort_values('avg_weight', ascending=False)['topic'].values,
@@ -166,7 +167,8 @@ def update_diachronic_histo(val, journals, languages):
     ordered_topics = DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'].sort_values().values
 
     if val == 'avg':
-        s = 'Average weight'
+        axis_name = 'Average topic weights'
+        s = 'Topic weight'
         df = DM.DOCTOPICS_DF.loc[DM.METADATA_DF['lang'].isin(languages)] \
             .loc[DM.METADATA_DF['journal_id'].isin(journals)]
         n_docs = len(df)
@@ -174,7 +176,8 @@ def update_diachronic_histo(val, journals, languages):
         df.columns = df.columns.map(DM.TOPIC_MAPPINGS_DF['cluster_letter_+_topic_(id)'])
         x, y, color = df.index, df.columns, None
     else:
-        s = 'Main topic frequency'
+        axis_name = 'Proportion of articles with topic as main'
+        s = 'Proportion as main'
         df = DM.METADATA_DF.loc[DM.METADATA_DF['lang'].isin(languages)] \
             .loc[DM.METADATA_DF['journal_id'].isin(journals)]
         n_docs = len(df)
@@ -193,9 +196,9 @@ def update_diachronic_histo(val, journals, languages):
     fig.update_layout(bargap=0.0, legend_title='Topics', legend_traceorder='reversed',
                       plot_bgcolor='#fcfcfc',
                       paper_bgcolor='#fcfcfc',
-                      title='Topic distributions by time periods',
+                      title='Topic Distributions by Time Periods',
                       xaxis_title='Time periods',
-                      yaxis_title=f'Topic distributions ({s})',
+                      yaxis_title=axis_name,
                       margin_t=30
                       )\
         .update_traces(marker_line_width=0.0)
